@@ -23,7 +23,8 @@ namespace XamariniOSTestApp
 
 			UserDetailsTextView.Text = String.Empty;
 
-			LoginButton.TouchUpInside += LoginButton_TouchUpInside;
+			View.BackgroundColor = UIColor.Green;
+			LoginButton.TouchUpInside += LoginButton_TouchUpInside;			
 		}
 
 		public override void DidReceiveMemoryWarning()

@@ -7,6 +7,10 @@ using IdentityModel.Client;
 using IdentityModel.OidcClient;
 using IdentityModel.OidcClient.Results;
 
+#if __IOS__
+using SafariServices;
+#endif
+
 namespace Auth0.OidcClient
 {
     public class Auth0Client
@@ -58,10 +62,24 @@ namespace Auth0.OidcClient
                     RequireAccessTokenHash = false
                 }
             };
-            _oidcClient = new IdentityModel.OidcClient.OidcClient(oidcClientOptions);
+            _oidcClient = new IdentityModel.OidcClient.OidcClient(oidcClientOptions);			
         }
 
-        private Dictionary<string, string> AppendTelemetry(object values)
+#if __IOS__
+		public void ShowAnimated(bool animated)
+		{
+			var view = (PlatformWebView)_oidcClient.Options.Browser;
+			view.ShowAnimated = animated;
+		}
+
+		public void SetOnSafariDisplayedHandler(Action<SFSafariViewController> handler)
+		{
+			var view = (PlatformWebView)_oidcClient.Options.Browser;
+			view.OnSafariDisplayed = handler;
+		}
+#endif
+
+		private Dictionary<string, string> AppendTelemetry(object values)
         {
             var dictionary = ObjectToDictionary(values);
 
