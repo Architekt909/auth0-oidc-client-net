@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDisplayName</key>
 	<string>XamariniOSTestApp</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.auth0.XamariniOSTestApp</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -51,5 +49,7 @@
 			<string>auth0</string>
 		</dict>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string>com.auth0.XamariniOSTestApp</string>
 </dict>
 </plist>

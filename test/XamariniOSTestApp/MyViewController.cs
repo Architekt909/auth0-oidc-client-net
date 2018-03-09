@@ -36,8 +36,8 @@ namespace XamariniOSTestApp
 		{
 		    _client = new Auth0Client(new Auth0ClientOptions
 		    {
-		        Domain = "jerrie.auth0.com",
-		        ClientId = "vV9twaySQzfGesS9Qs6gOgqDsYDdgoKE",
+		        Domain = "burnable.auth0.com",
+		        ClientId = "ID7tyY5U7toxI5cClvjZ3B0N0r4JpsNk",
 		        Controller = this
 		    });
 
@@ -52,9 +52,9 @@ namespace XamariniOSTestApp
             }
             else
             {
-                sb.AppendLine($"ID Token: {loginResult.IdentityToken}");
-                sb.AppendLine($"Access Token: {loginResult.AccessToken}");
-                sb.AppendLine($"Refresh Token: {loginResult.RefreshToken}");
+                sb.AppendLine($"ID Token: {!string.IsNullOrEmpty(loginResult.IdentityToken)}");
+                sb.AppendLine($"Access Token: {!string.IsNullOrEmpty(loginResult.AccessToken)}");
+                sb.AppendLine($"Refresh Token: {!string.IsNullOrEmpty(loginResult.RefreshToken)}");
                 sb.AppendLine();
                 sb.AppendLine("-- Claims --");
                 foreach (var claim in loginResult.User.Claims)

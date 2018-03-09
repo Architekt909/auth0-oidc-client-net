@@ -100,7 +100,9 @@ namespace Auth0.OidcClient
         /// <returns></returns>
         public Task<LoginResult> LoginAsync(object extraParameters = null)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             return _oidcClient.LoginAsync(extraParameters: AppendTelemetry(extraParameters));
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         private Dictionary<string, string> ObjectToDictionary(object values)
