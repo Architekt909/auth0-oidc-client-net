@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CoreAnimation;
+using CoreGraphics;
 using Foundation;
 using IdentityModel.OidcClient.Browser;
 using SafariServices;
@@ -38,9 +40,12 @@ namespace Auth0.OidcClient
 			// with setting the task result
 			var tcs = new TaskCompletionSource<BrowserResult>();
 
+			var vcTest = new UIViewController();
+
 			// create Safari controller
-			_safari = new SafariServices.SFSafariViewController(new NSUrl(options.StartUrl));
+			_safari = new SFSafariViewController(new NSUrl(options.StartUrl));
             _safari.Delegate = this;
+			_safari.DismissButtonStyle = SFSafariViewControllerDismissButtonStyle.Cancel;
 
 			ActivityMediator.MessageReceivedEventHandler callback = null;
 			callback = async (response) =>
@@ -72,8 +77,23 @@ namespace Auth0.OidcClient
 			// attach handler
 			ActivityMediator.Instance.ActivityMessageReceived += callback;
 
+			// hmm adding views in _safari above/below or to the _controller didn't let us change the bg color left by the mask.
+			// maybe we need to subclass the sfsafari thing? And perhaps add our own colored rectangle on top of the toolbar?
+			
+
 			// launch Safari
-			_controller.PresentViewController(_safari, true, null);
+			_controller.PresentViewController(_safari, true, null);			
+
+			// Jeff: used to hide stupid toolbar
+			// So this will create a mask that hides the bottom toolbar. Thing is the mask doesn't care about the color.
+			// It only uses the BackgroundColor's alpha. So not setting a color just clips the view. If you set the background color to like
+			// maskView.BackgroundColor = UIColor.FromWhiteAlpha(1, 0.5f);
+			// you'd have the entire view displaying at half alpha, and then the bottom would still not display cause we clipped it.
+			// So in order to have a color behind it, we'd have to have a view below it with whatever color.
+			var rect = new CGRect(0, 0, _controller.View.Frame.Width, _controller.View.Frame.Height - 44);
+			var maskView = new UIView(rect);
+			maskView.BackgroundColor = UIColor.White;
+			_safari.View.MaskView = maskView;
 
 			// need an intent to be triggered when browsing to the "io.identitymodel.native://callback"
 			// scheme/URI => CallbackInterceptorActivity
