@@ -45,8 +45,7 @@ namespace Auth0.OidcClient
 			var tcs = new TaskCompletionSource<BrowserResult>();
 
 			// create Safari controller
-			_safari = new SFSafariViewController(new NSUrl(options.StartUrl));
-			//_safari = new CustomSafari(new NSUrl(options.StartUrl));
+			_safari = new SFSafariViewController(new NSUrl(options.StartUrl));			
             _safari.Delegate = this;
 			_safari.DismissButtonStyle = SFSafariViewControllerDismissButtonStyle.Cancel;
 

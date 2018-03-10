@@ -5,6 +5,7 @@ using Auth0.OidcClient;
 using IdentityModel.OidcClient;
 using Foundation;
 using System.Text;
+using CoreGraphics;
 
 namespace XamariniOSTestApp
 {
@@ -27,22 +28,38 @@ namespace XamariniOSTestApp
 			LoginButton.TouchUpInside += LoginButton_TouchUpInside;			
 		}
 
-		public override void DidReceiveMemoryWarning()
-		{
-			base.DidReceiveMemoryWarning();
-			// Release any cached data, images, etc that aren't in use.
-		}
 
 		private async void LoginButton_TouchUpInside(object sender, EventArgs e)
 		{
-		    _client = new Auth0Client(new Auth0ClientOptions
-		    {
-		        Domain = "burnable.auth0.com",
-		        ClientId = "ID7tyY5U7toxI5cClvjZ3B0N0r4JpsNk",
-		        Controller = this
+			_client = new Auth0Client(new Auth0ClientOptions
+			{
+				Domain = "burnable.auth0.com",
+				ClientId = "ID7tyY5U7toxI5cClvjZ3B0N0r4JpsNk",
+				Controller = this,
+				UseWKWebView = true				
 		    });
 
-			var loginResult = await _client.LoginAsync(null);
+			_client.SetAutoClose(true);
+			_client.SetOnCancel(wv =>
+			{
+				var bla = 0;
+				bla++;
+			});
+
+			_client.SetOnSuccess(wv =>
+			{
+				var bla = 0;
+				bla++;
+			});
+
+			_client.SetWKWebViewFrame(new CGRect(50, 50, View.Frame.Width - 100, View.Frame.Height - 100));
+			_client.SetOnHideCallbackHandler("callbackHandler");
+			_client.SetOnHideMessageName("hide");
+			_client.DisableZooming(true);
+			_client.DisableBouncing(true);
+			_client.DisableScrolling(true);
+
+			var loginResult = await _client.LoginAsync();
 
             var sb = new StringBuilder();
 

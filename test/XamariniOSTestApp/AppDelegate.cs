@@ -19,6 +19,7 @@ namespace XamariniOSTestApp
             set;
         }
 
+		// This is only called if we're not using the WKWebView
 		public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
 		{
 			ActivityMediator.Instance.Send(url.AbsoluteString);

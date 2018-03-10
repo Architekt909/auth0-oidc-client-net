@@ -31,15 +31,23 @@ namespace Auth0.OidcClient
         /// The View Controller from which the login process is initiated
         /// </summary>
         public UIKit.UIViewController Controller { get; set; }
+
+		/*
+			Sets whether to use a WKWebView or an SFSafariViewController. The former allows for a better experience and is the default.
+			IMPORTANT: If this is enabled, you don't have to override OpenUrl in your AppDelegate like the quick start instructions say to.
+			That part of handling the redirect will be taken care of automatically.
+		 */
+		//
+		public bool UseWKWebView { get; set; } = true;		
 #endif
 
-        /// <summary>
-        /// Your Auth0 tenant domain.
-        /// </summary>
-        /// <remarks>
-        /// e.g. tenant.auth0.com
-        /// </remarks>
-        public string Domain { get; set; }
+		/// <summary>
+		/// Your Auth0 tenant domain.
+		/// </summary>
+		/// <remarks>
+		/// e.g. tenant.auth0.com
+		/// </remarks>
+		public string Domain { get; set; }
 
         /// <summary>
         /// Indicates whether telemetry information should be sent to Auth0.
